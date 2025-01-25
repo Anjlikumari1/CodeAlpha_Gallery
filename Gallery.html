@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery (Two Images Per Frame)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f7f7f7;
+    }
+
+    .gallery-container {
+      width: 80%;
+      max-width: 1000px;
+      height: 600px; 
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-images {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .gallery-images img {
+      width: 50%; 
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 24px;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .nav-button:disabled {
+      background-color: rgba(0, 0, 0, 0.2);
+      cursor: not-allowed;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="gallery-container">
+    <div class="gallery-images">
+      <img src="pics/img1.avif" alt="Image 1">
+      <img src="pics/img2.avif" alt="Image 2">
+      <img src="pics/img3.avif" alt="Image 3">
+      <img src="pics/img3.avif" alt="Image 4">
+    </div>
+    <button class="nav-button prev" id="prev-button" onclick="changeImage(-1)" disabled>&#10094;</button>
+    <button class="nav-button next" id="next-button" onclick="changeImage(1)">&#10095;</button>
+  </div>
+
+  <script>
+    let currentIndex = 0; 
+    const totalFrames = 2; 
+
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+
+    function changeImage(direction) {
+      currentIndex += direction;
+
+      
+      updateGallery();
+      updateButtons();
+    }
+
+    function updateGallery() {
+      const gallery = document.querySelector('.gallery-images');
+      gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function updateButtons() {
+      
+      prevButton.disabled = currentIndex === 0;
+      nextButton.disabled = currentIndex === totalFrames - 1;
+    }
+
+   
+    updateButtons();
+  </script>
+
+</body>
+</html>
